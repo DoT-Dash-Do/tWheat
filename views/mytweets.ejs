@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+      
+    </style>
+    <script src="https://kit.fontawesome.com/d6fdc2471f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <%- include('header.ejs') %>
+  <div class="flex justify-between max-w-[1200px] m-auto">
+      <%-include('sidebar.ejs') %>
+      <div class="flex-1 p-10 w-[700px] max-h-screen overflow-scroll">
+        <h3 class="text-2xl">Your Posts</h3>
+        <div>
+          <% for(let i = 0;i<result.length;i++)
+          {
+            %>
+            <div class="mt-2 mx-auto bg-white rounded-lg shadow-md p-4">
+              <div class="flex gap-4 items-center text-center">
+                <img class="h-14 w-14 rounded-full"  src="/img/images.png" alt="">
+                <h2 class="text-xl mb-4"><%=result[i].uname%></h2>
+              </div>
+                  <div class="mb-4">
+                    <p class="text-md">
+                        <%=result[i].post%>
+                    </p>
+                    <%if(result[i].tweetimgvdeo != null)
+                    { if(result[i].file_type === 'video/mp4')
+                      { %>
+                        <div class="flex items-center justify-center">
+                          <video width="400" height="300" controls>
+                          <source src="uploads/<%=result[i].tweetimgvdeo%>" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                        </div>
+                        
+                    <% } else { %>
+                        <div class="flex items-center justify-center h-[300px] rounded-md overflow-hidden">
+                        <img class="object-cover h-[100%] w-[100%]" src="uploads/<%=result[i].tweetimgvdeo%>" alt="">
+                      </div>
+                      <% } } %>
+                  </div>
+                  <hr>
+                  <div class="flex justify-between">
+                    <button class="mt-4 rounded-lg p-3 bg-blue-300">like</button>
+                    <button class="mt-4 rounded-lg p-3 bg-blue-300">comment</button>      
+                  </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+  </div>
+  </body>
+</html>

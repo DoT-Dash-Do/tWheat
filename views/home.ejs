@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+      
+    </style>
+    <script src="https://kit.fontawesome.com/d6fdc2471f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <div class="shadow-lg">
+      <div class="flex items-center justify-between pl-0 py-4 px-10 sm:py-4">
+        <a href="/home"><div class="flex text-center text-blue-400 px-8 font-bold text-2xl"><i class="fa-solid fa-wheat-awn" style="color: #74C0FC;"></i>tWheat</div></a>
+        <form class="flex items-center justify-center rounded " method="post" action="/search">
+          <div class="flex border-2 border-gray-200 rounded-lg">
+            <input
+              type="text"
+              class="px-4 w-24 sm:w-80"
+              name="sQuery"
+              placeholder="Search..."
+            />
+            <button type="submit" class="px-4 text-white bg-blue-400 border-l">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="flex h-screen max-w-[1330px] m-auto">
+      <div class="w-[300px]">
+        <div class="flex items-center justify-center h-16">
+          <h1 class="text-xl font-semibold">Welcome <%=data.uName%></h1>
+        </div>
+        <nav class="mt-5">
+          <ul>
+            <li>
+              <a
+                href="/selfprofile"
+                class="flex items-center px-6 py-3 hover:bg-gray-700 hover:text-white"
+              >
+                Profile
+              </a>
+            </li>
+            <li>
+              <a
+                href="/chngPswd"
+                class="flex items-center px-6 py-3 hover:bg-gray-700 hover:text-white"
+              >
+                Change Password
+              </a>
+            </li>
+            <li>
+              <a
+                href="/followers"
+                class="flex items-center px-6 py-3 hover:bg-gray-700 hover:text-white"
+              >
+                Followers
+              </a>
+            </li>
+            <li>
+              <a
+                href="/following"
+                class="flex items-center px-6 py-3 hover:bg-gray-700 hover:text-white"
+              >
+                Following
+              </a>
+            </li>
+            <li>
+              <a
+                href="/mytweets"
+                class="flex items-center px-6 py-3 hover:bg-gray-700 hover:text-white"
+              >
+                My tWheats
+              </a>
+            </li>
+            <li>
+              <a
+                href="/logout"
+                class="flex items-center px-6 py-3 hover:bg-gray-700 hover:text-white"
+              >
+                Logout
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Main Content -->
+      <div class="flex-1 py-10 max-w-[700px] max-h-screen overflow-scroll">
+        <div class="max-w-xl mx-auto bg-white rounded-lg shadow-md p-8">
+          <h2 class="text-2xl font-semibold mb-4">Create a New Post</h2>
+          <form action="/tweet_post" method="post" enctype="multipart/form-data">
+            <div class="mb-4">
+              <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+              <textarea id="content" name="post" rows="5" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+            </div>
+            <div class="flex justify-between">
+              <div class="mb-4">
+                  <label for="file-input" class="sr-only">Choose file</label>
+                  <input type="file" name="tweet_image" id="file-input" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none
+                    file:bg-gray-50 file:border-0
+                    file:me-4
+                    file:py-3 file:px-4  max-w-[300px]">
+              </div>
+              <div class="">
+                <button type="submit" class="h-[43px] bg-blue-400 text-white px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Create tWheat</button>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        <div>
+          <% for(let i = 0;i<result.length;i++)
+          {
+            %>
+            <div class="mt-2 mx-auto max-w-xl bg-white rounded-lg shadow-md p-4">
+              <div class="flex gap-4 items-center text-center">
+                <img class="h-14 w-14 rounded-full"  src="/img/images.png" alt="">
+                <h2 class="text-xl mb-4"><%=result[i].uname%></h2>
+              </div>
+                  <div class="mb-4">
+                    <p class="text-md">
+                        <%=result[i].post%>
+                    </p>
+                    <%if(result[i].tweetimgvdeo != null)
+                    { if(result[i].file_type === 'video/mp4')
+                      { %>
+                        <div class="flex items-center justify-center">
+                          <video width="400" height="300" controls>
+                          <source src="/uploads/<%=result[i].tweetimgvdeo%>" type="video/mp4">
+                          Your browser does not support the video tag.
+                        </video>
+                        </div>
+                        
+                    <% } else { %>
+                        <div class="flex items-center justify-center h-[300px] rounded-md overflow-hidden">
+                        <img class="object-cover h-[100%] w-[100%]" src="/uploads/<%=result[i].tweetimgvdeo%>" alt="">
+                      </div>
+                      <% } } %>
+                  </div>
+                  <hr>
+                  <div class="flex justify-between">
+                    <button class="mt-4 rounded-lg p-3 bg-blue-300">like</button>
+                    <button class="mt-4 rounded-lg p-3 bg-blue-300">comment</button>      
+                  </div>
+            </div>
+          <% } %>
+        </div>        
+    </div>
+      <div class="flex-row p-10 gap-2">
+        <p class="font-bold">Trending</p>
+        <div class="flex gap-2">
+          <a class="bg-gray-200 rounded-lg p-1 hover:bg-gray-700 hover:text-white" href="#">#India</a>
+          <span>30 Tweets</span>
+      </div>
+      <div class="flex gap-2">
+        <a class="bg-gray-200 rounded-lg p-1 hover:bg-gray-700 hover:text-white" href="#">#Narendra Modi</a>
+        <span>27 Tweets</span>
+    </div>
+    <div class="flex gap-2">
+      <a class="bg-gray-200 rounded-lg p-1 hover:bg-gray-700 hover:text-white" href="#">#BanTwitter</a>
+      <span>30 Tweets</span>
+  </div>
+  <div class="flex gap-2">
+    <a class="bg-gray-200 rounded-lg p-1 hover:bg-gray-700 hover:text-white" href="#">#BanPlastic</a>
+    <span>33 Tweets</span>
+  </div>
+  </div>
+</div>
+  </body>
+</html>

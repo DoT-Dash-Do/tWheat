@@ -1,0 +1,50 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+      
+    </style>
+    <script src="https://kit.fontawesome.com/d6fdc2471f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <%- include('header.ejs') %>
+    <div class="flex h-screen max-w-[1200px] m-auto">
+        <%-include('sidebar.ejs') %>
+        <div class="flex-1 p-10 max-w-[500px]">
+          <h3 class="text-xl">Your Followers</h3>
+          <div class="flex-1 gap-2">
+            <% for(let i = 0;i<result.length;i++)
+            {
+              %>
+              <div class="mx-auto bg-white rounded-lg shadow-md p-4">
+               <a href="/profile/<%=result[i].uid%>"><p><%=result[i].username%></p></a> 
+              </div>
+
+            <% } %>
+          </div>
+        </div>
+    </div>
+  </body>
+  </html>

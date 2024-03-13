@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+    </style>
+    <script src="https://kit.fontawesome.com/d6fdc2471f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <div class="text-slate-800">
+      <div class="flex w-full flex-col">
+        <div class="flex justify-center pt-12 md:justify-start md:pl-12">
+          <a href="/home" class="text-2xl font-bold text-blue-400"><i class="fa-solid fa-wheat-awn" style="color: #74C0FC;"></i> tWheat </a>
+        </div>
+        <div class="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]">
+          <form class="flex flex-col items-stretch pt-3 md:pt-8" method="post" action="/chkstatus">
+            <div class="flex flex-col pt-4">
+              <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+                <input type="number" name="otp" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" >
+              </div>
+            </div>
+            <button type="submit" class="mt-6 rounded-lg bg-blue-400 px-4 py-2 text-center text-base font-semibold text-white shadow-md outline-none ring-blue-500 ring-offset-2 transition hover:bg-blue-700 focus:ring-2">update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

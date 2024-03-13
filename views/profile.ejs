@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+    </style>
+    <script
+      src="https://kit.fontawesome.com/d6fdc2471f.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  </head>
+  <body>
+    <%-include('header.ejs')%>
+    <div class="w-[1200px] mx-auto shadow-lg">
+      <div class="flex flex-col">
+        <%if(res1[0].headerpic == null){%>
+        <div class="flex bg-gray-100 p-10 min-h-50 items-center justify-center">
+          
+          <%if(res1[0].ppic == null){%>
+              <img
+                class="rounded-full h-40 w-40 border border-4 border-blue-300"
+                src="/img/images.png"
+                alt="hello"
+              />
+            </div>
+            <%} else {%>
+                <img
+                  class="rounded-full h-40 w-40 border border-4 border-blue-300"
+                  src="/uploads/<%=res1[0].ppic%>"
+                  alt="hello"
+                />
+              
+              <%}%>
+        </div>
+        <%} else {%>
+          <div class="flex bg-[url('/uploads/<%=res1[0].headerpic%>')] bg- p-10 min-h-50 items-center justify-center">
+            <%if(res1[0].ppic == null){%>
+              <img
+                class="rounded-full h-40 w-40 border border-4 border-blue-300"
+                src="/img/images.png"
+                alt="hello"
+              />
+            </div>
+            <%} else {%>
+                <img
+                  class="rounded-full h-40 w-40 border border-4 border-blue-300"
+                  src="/uploads/<%=res1[0].ppic%>"
+                  alt="hello"
+                />
+              
+              <%}%>
+          </div>
+          <%}%>
+        <div class="flex flex-col px-10 py-6 text-center">
+          <h1 class="text-[40px] font-bold"><%=res1[0].fname%></h1>
+          <hr class="h-4" />
+          <div class="flex flex-row justify-between">
+            <div>
+              <p class="text-left"><%=res1[0].username%></p>
+              <p class="text-left mb-4"><%=res1[0].about%></p>
+            </div>
+            <div>
+              <%if(res2.length === 0)
+              {
+              %>
+              <a href="/follow/<%=res1[0].uid%>">
+              <button class="bg-blue-300 w-[100px] p-3 rounded-lg">
+                follow
+              </button>
+              </a>
+              
+              <%
+            } else {%>
+              <a href="/unfollow/<%=res1[0].uid%>">
+                <button class="bg-blue-300 w-[100px] p-3 rounded-lg">
+                unfollow
+              </button></a>
+              
+              
+              <% } %>
+      </div>
+            
+          </div>
+          
+          <hr class="h-6" />
+          <p>Posts</p>
+          <div>
+            <% for(let i = 0;i<result.length;i++)
+            {
+              %>
+              <div class="mt-2 mx-auto bg-white rounded-lg shadow-md p-4">
+                <div class="flex gap-4 items-center text-center">
+                  <img class="h-14 w-14 rounded-full"  src="/img/images.png" alt="">
+                  <h2 class="text-xl mb-4"><%=result[i].uname%></h2>
+                </div>
+                    <div class="mb-4">
+                      <p class="text-md">
+                          <%=result[i].post%>
+                      </p>
+                      <%if(result[i].tweetimgvdeo != null)
+                      { if(result[i].file_type === 'video/mp4')
+                        { %>
+                          <div class="flex items-center justify-center">
+                            <video width="400" height="300" controls>
+                            <source src="/uploads/<%=result[i].tweetimgvdeo%>" type="video/mp4">
+                            Your browser does not support the video tag.
+                          </video>
+                          </div>
+                          
+                      <% } else { %>
+                          <div class="flex items-center justify-center h-[300px] rounded-md overflow-hidden">
+                          <img class="object-cover h-[100%] w-[100%]" src="/uploads/<%=result[i].tweetimgvdeo%>" alt="">
+                        </div>
+                        <% } } %>
+                    </div>
+                    <hr>
+                    <div class="flex justify-between">
+                      <button class="mt-4 rounded-lg p-3 bg-blue-300">like</button>
+                      <button class="mt-4 rounded-lg p-3 bg-blue-300">comment</button>      
+                    </div>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+  
